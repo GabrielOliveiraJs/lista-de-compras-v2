@@ -30,12 +30,7 @@ const StyledSheet = styled.ul`
         }
     `
 
-const Sheet = ({ itens, deletedSelectedItem }) => {
-
-    const deleteItem = (id) => {
-        deletedSelectedItem(id)
-    }
-
+const Sheet = ({ itens }) => {
     return (
         <StyledSheet>
             {
@@ -46,7 +41,6 @@ const Sheet = ({ itens, deletedSelectedItem }) => {
                             id={item.id}
                             text={item.itemName}
                             quantity={item.quantity}
-                            deleteItem={deleteItem}
                         />
                     )
                     :

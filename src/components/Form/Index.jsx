@@ -1,9 +1,10 @@
 import { MdAddCircleOutline, MdOutlineRemoveCircleOutline, MdOutlinePlaylistAdd } from "react-icons/md"
 import { v4 as uuidv4 } from 'uuid'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Input from "./Input/Index"
 import SpanButton from "../SpanButton/Index"
+import { useItens } from "../../hooks/useItens"
 
 const StyledItemForm = styled.form`
     width: 100%;
@@ -43,7 +44,8 @@ const StyledFormButton = styled.button`
     }
 `
 
-const Form = ({ createdItem }) => {
+const Form = () => {
+    const { addNewItem } = useItens()
     const [itemName, setItemName] = useState('')
     const [quantity, setQuantity] = useState(1)
 
@@ -57,13 +59,15 @@ const Form = ({ createdItem }) => {
         }
     }
 
-    const saveItem = (e) => {
+    const saveItem = async (e) => {
         e.preventDefault()
-        createdItem({
+        const createdItem = {
             id: uuidv4(),
             itemName,
             quantity
-        })
+        }
+
+        await addNewItem(createdItem)
         setItemName('')
         setQuantity(1)
     }

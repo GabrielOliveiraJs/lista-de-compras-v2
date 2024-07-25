@@ -2,6 +2,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import SpanButton from "../../SpanButton/Index"
 import { FaDeleteLeft } from "react-icons/fa6"
+import { useItens } from "../../../hooks/useItens"
 
 const StyledSheetItem = styled.li`
     display: flex;
@@ -86,15 +87,16 @@ const StyledQuantity = styled.p`
     color: var(--color-text);
 `
 
-const SheetItem = ({ id, text, quantity, deleteItem }) => {
+const SheetItem = ({ id, text, quantity }) => {
+    const { deleteSelectedItem } = useItens()
     const [isChecked, setIsChecked] = useState(false)
-    
+
     const checkItem = () => {
         setIsChecked(isChecked === false ? true : false)
     }
 
     const getItem = (id) => {
-        deleteItem(id)
+        deleteSelectedItem(id)
     }
 
     return (

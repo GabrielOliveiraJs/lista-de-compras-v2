@@ -1,10 +1,10 @@
 import './normalize.css'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import Form from './components/Form/Index'
 import Sheet from './components/Sheet/Index'
 import ThemeList from './components/ThemeList/Index'
-import { getItems } from './services/items'
+import { useItens } from './hooks/useItens'
 
 const StyledTitle = styled.h1`
   color: var(--color-title);
@@ -29,24 +29,15 @@ const StyledSelectSection = styled.section`
 `
 
 function App() {
-  const [itens, setItens] = useState([])
+  const { itens, setItens, fetchItems } = useItens()
 
   useEffect(() => {
     fetchItems()
-  }, [])
+  }, [itens])
 
-  const fetchItems = async () => {
-    const itemsApi = await getItems()
-    setItens(itemsApi)
-  }
-
-  const addNewItem = (item) => {
-    setItens([...itens, item])
-  }
-
-  const deletedSelectedItem = (id) => {
-    setItens(itens.filter(item => item.id !== id))
-  }
+  // const deletedSelectedItem = (id) => {
+  //   setItens(itens.filter(item => item.id !== id))
+  // }
 
   return (
     <StyledWrapContainer>
@@ -54,8 +45,8 @@ function App() {
         <ThemeList />
       </StyledSelectSection>
       <StyledTitle>Lista de compras</StyledTitle>
-      <Form createdItem={item => addNewItem(item)} />
-      <Sheet itens={itens} deletedSelectedItem={deletedSelectedItem} />
+      <Form />
+      <Sheet itens={itens} />
     </StyledWrapContainer>
   )
 }
