@@ -45,7 +45,7 @@ const StyledFormButton = styled.button`
 `
 
 const Form = () => {
-    const { addNewItem } = useItens()
+    const { addNewItem, createId } = useItens()
     const [itemName, setItemName] = useState('')
     const [quantity, setQuantity] = useState(1)
 
@@ -62,7 +62,7 @@ const Form = () => {
     const saveItem = async (e) => {
         e.preventDefault()
         const createdItem = {
-            id: uuidv4(),
+            id: await createId(),
             itemName,
             quantity
         }

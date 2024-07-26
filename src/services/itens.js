@@ -10,13 +10,11 @@ async function getItens() {
 }
 
 async function createItens(data) {
-    const response = await itensApi.post('/', data)
-    return response.data
+    await itensApi.post('/', data)
 }
 
 async function deleteItem(id) {
-    const response = await itensApi.delete(`/${id}`)
-    return response.data
+    await itensApi.delete(`/${id}`)
 }
 
 export {

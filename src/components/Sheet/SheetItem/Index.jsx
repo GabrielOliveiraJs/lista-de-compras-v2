@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import SpanButton from "../../SpanButton/Index"
 import { FaDeleteLeft } from "react-icons/fa6"
@@ -95,8 +95,9 @@ const SheetItem = ({ id, text, quantity }) => {
         setIsChecked(isChecked === false ? true : false)
     }
 
-    const getItem = (id) => {
-        deleteSelectedItem(id)
+    const deleteItem = async (id) => {
+        await deleteSelectedItem(id)
+        console.log('Item deletado: ', id)
     }
 
     return (
@@ -108,7 +109,7 @@ const SheetItem = ({ id, text, quantity }) => {
             <StyledQuantity style={{ textDecoration: `${isChecked ? 'line-through' : 'none'}` }}>
                 {quantity}
             </StyledQuantity>
-            <SpanButton type='remove' onClick={() => getItem(id)}>
+            <SpanButton type='remove' onClick={() => deleteItem(id)}>
                 <FaDeleteLeft />
             </SpanButton>
         </StyledSheetItem>

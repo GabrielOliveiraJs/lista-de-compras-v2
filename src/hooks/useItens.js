@@ -9,6 +9,17 @@ export function useItens() {
     setItens(itemsApi)
   }
 
+  const createId = async () => {
+    const itemsApi = await getItens()
+    if (itemsApi.length > 0) {
+      const allIds = itemsApi.map(item => item.id)
+      const newId = Math.max(...allIds) + 1
+      return newId
+    } else {
+      return 1
+    }
+  }
+
   const addNewItem = async (newItem) => {
     try {
 
@@ -26,18 +37,15 @@ export function useItens() {
     }
   }
 
-  const deleteSelectedItem = (id) => {
-    if (id && Number(id)) {
-      deleteItem(id)
-    } else {
-      console.log('Id inválido: ', id)
-    }
+  const deleteSelectedItem = async (id) => {
+    await deleteItem(id)
   }
 
   return {
     itens,
     setItens,
     fetchItems,
+    createId,
     addNewItem,
     deleteSelectedItem
   }
