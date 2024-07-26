@@ -1,8 +1,9 @@
 import { useState } from "react"
-import { createItens, deleteItem, getItens } from "../services/itens"
+import { getItens, createItens, updateItens, deleteItem } from "../services/itens"
 
 export function useItens() {
   const [itens, setItens] = useState([])
+  const [isChecked, setIsChecked] = useState(false)
 
   const fetchItems = async () => {
     const itemsApi = await getItens()
@@ -37,16 +38,28 @@ export function useItens() {
     }
   }
 
+  const changeIsChecked = async (id) => {
+    const itemsApi = await getItens()
+    const item = await itemsApi.find(item => item.id === Number(id))
+    const alteredItem = { ...item, checked: isChecked === false ? true : false }
+    
+    setIsChecked(alteredItem.checked)
+    await updateItens(id, alteredItem)
+  }
+
   const deleteSelectedItem = async (id) => {
     await deleteItem(id)
   }
 
   return {
     itens,
+    isChecked,
+    setIsChecked,
     setItens,
     fetchItems,
     createId,
     addNewItem,
+    changeIsChecked,
     deleteSelectedItem
   }
 }

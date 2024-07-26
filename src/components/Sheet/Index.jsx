@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import SheetItem from './SheetItem/Index'
 import InfoMessage from '../InfoMessage/Index'
+import { useItens } from '../../hooks/useItens'
+import { useEffect } from 'react'
 
 const StyledSheet = styled.ul`
         width: 100%;
@@ -30,7 +32,12 @@ const StyledSheet = styled.ul`
         }
     `
 
-const Sheet = ({ itens }) => {
+const Sheet = () => {
+    const { itens, fetchItems } = useItens()
+
+    useEffect(() => {
+        fetchItems()
+    }, [itens])
     return (
         <StyledSheet>
             {
@@ -41,6 +48,7 @@ const Sheet = ({ itens }) => {
                             id={item.id}
                             text={item.itemName}
                             quantity={item.quantity}
+                            checked={item.checked}
                         />
                     )
                     :

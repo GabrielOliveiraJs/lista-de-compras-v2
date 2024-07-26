@@ -1,6 +1,5 @@
 import { MdAddCircleOutline, MdOutlineRemoveCircleOutline, MdOutlinePlaylistAdd } from "react-icons/md"
-import { v4 as uuidv4 } from 'uuid'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
 import Input from "./Input/Index"
 import SpanButton from "../SpanButton/Index"
@@ -64,7 +63,8 @@ const Form = () => {
         const createdItem = {
             id: await createId(),
             itemName,
-            quantity
+            quantity,
+            checked: false
         }
 
         await addNewItem(createdItem)

@@ -1,10 +1,8 @@
 import './normalize.css'
-import { useEffect } from 'react'
 import styled from 'styled-components'
 import Form from './components/Form/Index'
 import Sheet from './components/Sheet/Index'
 import ThemeList from './components/ThemeList/Index'
-import { useItens } from './hooks/useItens'
 
 const StyledTitle = styled.h1`
   color: var(--color-title);
@@ -29,16 +27,6 @@ const StyledSelectSection = styled.section`
 `
 
 function App() {
-  const { itens, setItens, fetchItems } = useItens()
-
-  useEffect(() => {
-    fetchItems()
-  }, [itens])
-
-  // const deletedSelectedItem = (id) => {
-  //   setItens(itens.filter(item => item.id !== id))
-  // }
-
   return (
     <StyledWrapContainer>
       <StyledSelectSection>
@@ -46,7 +34,7 @@ function App() {
       </StyledSelectSection>
       <StyledTitle>Lista de compras</StyledTitle>
       <Form />
-      <Sheet itens={itens} />
+      <Sheet />
     </StyledWrapContainer>
   )
 }

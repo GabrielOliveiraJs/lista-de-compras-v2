@@ -87,26 +87,32 @@ const StyledQuantity = styled.p`
     color: var(--color-text);
 `
 
-const SheetItem = ({ id, text, quantity }) => {
-    const { deleteSelectedItem } = useItens()
-    const [isChecked, setIsChecked] = useState(false)
+const SheetItem = ({ id, text, quantity, checked }) => {
+    const { deleteSelectedItem, changeIsChecked } = useItens()
+    const [disabled, setDisabled] = useState(false)
 
-    const checkItem = () => {
-        setIsChecked(isChecked === false ? true : false)
+    const checkItem = async (id) => {
+        setDisabled(true)
+        await changeIsChecked(id)
+        setDisabled(false)
     }
 
     const deleteItem = async (id) => {
         await deleteSelectedItem(id)
-        console.log('Item deletado: ', id)
     }
 
     return (
         <StyledSheetItem id={id}>
-            <StyledCheckbox type="checkbox" onClick={checkItem} />
-            <StyledText style={{ textDecoration: `${isChecked ? 'line-through' : 'none'}` }}>
+            <StyledCheckbox
+                type="checkbox"
+                checked={checked}
+                disabled={disabled}
+                onChange={() => checkItem(id)}
+            />
+            <StyledText style={{ textDecoration: `${checked ? 'line-through' : 'none'}` }}>
                 {text}
             </StyledText>
-            <StyledQuantity style={{ textDecoration: `${isChecked ? 'line-through' : 'none'}` }}>
+            <StyledQuantity style={{ textDecoration: `${checked ? 'line-through' : 'none'}` }}>
                 {quantity}
             </StyledQuantity>
             <SpanButton type='remove' onClick={() => deleteItem(id)}>
