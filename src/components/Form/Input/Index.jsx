@@ -15,9 +15,9 @@ const StyledFormInput = styled.input`
 
     &:focus {
         background-color: rgba(255, 255, 255, 1);
-        -webkit-box-shadow: 5px 5px 10px 1px rgba(34, 34, 34, 0.4);
-        -moz-box-shadow: 5px 5px 10px 1px rgba(34, 34, 34, 0.4);
-        box-shadow: 5px 5px 10px 1px rgba(34, 34, 34, 0.4);
+        -webkit-box-shadow: 2px 2px 10px 1px var(--color-input-shadow);
+        -moz-box-shadow: 2px 2px 10px 1px var(--color-input-shadow);
+        box-shadow: 2px 2px 10px 1px var(--color-input-shadow);
     }
 
     &::-webkit-inner-spin-button {

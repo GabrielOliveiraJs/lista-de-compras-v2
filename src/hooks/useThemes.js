@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { getThemes, updateTheme } from "../services/themes"
 
 export function useThemes() {

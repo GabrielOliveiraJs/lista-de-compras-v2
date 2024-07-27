@@ -1,8 +1,8 @@
-import './normalize.css'
+import '../../normalize.css'
 import styled from 'styled-components'
-import Form from './components/Form/Index'
-import Sheet from './components/Sheet/Index'
-import ThemeList from './components/ThemeList/Index'
+import Form from '../../components/Form/Index'
+import Sheet from '../../components/Sheet/Index'
+import ThemeList from '../../components/ThemeList/Index'
 
 const StyledTitle = styled.h1`
   color: var(--color-title);
@@ -26,7 +26,7 @@ const StyledSelectSection = styled.section`
   align-items: center;
 `
 
-function App() {
+function Home() {
   return (
     <StyledWrapContainer>
       <StyledSelectSection>
@@ -39,4 +39,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
