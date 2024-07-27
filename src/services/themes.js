@@ -10,6 +10,11 @@ async function getThemes() {
     return response.data
 }
 
+async function updateTheme(id, data) {
+    await themesApi.patch(`/${id}`, data)
+}
+
 export {
-    getThemes
+    getThemes,
+    updateTheme
 }

@@ -38,6 +38,7 @@ const Sheet = () => {
     useEffect(() => {
         fetchItems()
     }, [itens])
+    
     return (
         <StyledSheet>
             {

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Item from "./Item/Index"
-import { useEffect, useState } from "react"
-import { getThemes } from "../../services/themes"
+import { useEffect } from "react"
+import { useThemes } from "../../hooks/useThemes"
 
 const StyledSelect = styled.select`
     background-color: #f2f2f2;
@@ -21,29 +21,19 @@ const StyledSelect = styled.select`
 `
 
 const ThemeList = () => {
-    const [themes, setThemes] = useState([])
-    const [themeId, setThemeId] = useState(1)
-    const [className, setClassName] = useState('theme-main')
-    const html = document.querySelector('html')
+    const { themes, themeId, className, setThemeId, fetchThemes, toggleTheme, getInitialTheme } = useThemes()
 
     useEffect(() => {
         fetchThemes()
-    }, [])
-
-    const fetchThemes = async () => {
-        const themesApi = await getThemes()
-        setThemes(themesApi)
-    }
+    }, [themes])
 
     useEffect(() => {
-        if (themes.length > 0) {
-            const selectedTheme = themes.filter((theme) => {
-                return theme.id === Number(themeId)
-            })
-            setClassName(selectedTheme[0].className)
-            html.classList.toggle(className)
-        }
+        toggleTheme()
     }, [themeId, className])
+
+    useEffect(() => {
+        getInitialTheme()
+    }, [])
 
     return (
         <StyledSelect value={themeId} onChange={e => setThemeId(e.target.value)}>
