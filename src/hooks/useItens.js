@@ -15,6 +15,7 @@ export function useItens() {
 
   const createId = async () => {
     const itemsApi = await getItens()
+
     if (itemsApi.length > 0) {
       const allIds = itemsApi.map(item => item.id)
       const newId = Math.max(...allIds) + 1
@@ -26,31 +27,48 @@ export function useItens() {
 
   const sendMessage = (message) => {
     setMessage(message)
-    setTimeout(() => setMessage(''), 1000)
+    setTimeout(() => setMessage(''), 2500)
   }
 
   const addNewItem = async (newItem) => {
     try {
       const itemsApi = await getItens()
+      const itensQty = itemsApi.length
       const itemAlreadyExists = itemsApi.find(item => item.itemName.trim().toLowerCase() === newItem.itemName.trim().toLowerCase())
 
       if (newItem.itemName === '' || newItem.quantity <= 0) {
-        sendMessage('Preencha os campos corretamente!')
+        sendMessage('Preencha os campos corretamente!', 'error')
         return
-
-      } else if (itemAlreadyExists) {
-        sendMessage('Item ja existe!')
-        return
-
-      } else {
-        await createItens(newItem)
-        setItens([...itens, newItem])
-        setItemName('')
-        setQuantity(1)
       }
+
+      if (itensQty >= 100) {
+        sendMessage('Voce ultrapassou o limite de itens', 'error')
+        return
+      }
+
+      if (newItem.itemName.length > 40) {
+        sendMessage('Escolha um nome menor', 'error')
+        return
+      }
+
+      if (newItem.quantity > 999) {
+        sendMessage('Escolha uma quantidade menor', 'error')
+        return
+      }
+
+      if (itemAlreadyExists) {
+        sendMessage('Item ja existe!', 'error')
+        return
+      }
+
+      await createItens(newItem)
+      setItens([...itens, newItem])
+      setItemName('')
+      setQuantity(1)
 
     } catch (error) {
       console.log(error)
+      sendMessage('Houve um erro ao adicionar o item', 'error')
     }
   }
 
