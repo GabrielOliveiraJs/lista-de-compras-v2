@@ -1,9 +1,11 @@
 import { MdAddCircleOutline, MdOutlineRemoveCircleOutline, MdOutlinePlaylistAdd } from "react-icons/md"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Input from "./Input/Index"
 import SpanButton from "../SpanButton/Index"
 import { useItens } from "../../hooks/useItens"
+import { Toaster } from 'react-hot-toast'
+import { useMessage } from "../../hooks/useMessage"
 
 const StyledItemForm = styled.form`
     width: 100%;
@@ -44,9 +46,14 @@ const StyledFormButton = styled.button`
 `
 
 const Form = () => {
-    const { addNewItem, createId } = useItens()
+    const { addNewItem, createId, message } = useItens()
+    const { createMessage } = useMessage()
     const [itemName, setItemName] = useState('')
     const [quantity, setQuantity] = useState(1)
+
+    useEffect(() => {
+        createMessage(message, 'error')
+    }, [message])
 
     const handleClickSpanButton = (type) => {
         if (type === 'add') {
@@ -102,11 +109,16 @@ const Form = () => {
                     <MdOutlineRemoveCircleOutline />
                 </SpanButton>
 
+                {
+                    message && <Toaster position="top-center" reverseOrder={false} />
+                }
+
             </StyledQtyContainer>
 
             <StyledFormButton>
                 <MdOutlinePlaylistAdd />
             </StyledFormButton>
+
         </StyledItemForm>
     )
 }

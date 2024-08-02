@@ -4,6 +4,7 @@ import { getItens, createItens, updateItens, deleteItem } from "../services/iten
 export function useItens() {
   const [itens, setItens] = useState([])
   const [isChecked, setIsChecked] = useState(false)
+  const [message, setMessage] = useState('')
 
   const fetchItems = async () => {
     const itemsApi = await getItens()
@@ -23,9 +24,17 @@ export function useItens() {
 
   const addNewItem = async (newItem) => {
     try {
+      const itemsApi = await getItens()
+
+      const itemAlreadyExists = itemsApi.find(item => item.itemName.trim().toLowerCase() === newItem.itemName.trim().toLowerCase())
 
       if (newItem.itemName === '' || newItem.quantity <= 0) {
         alert('Preencha os campos corretamente!')
+        return
+
+      } else if (itemAlreadyExists) {
+        setMessage('Item ja existe!')
+        setTimeout(() => setMessage(''), 2000)
         return
 
       } else {
@@ -42,7 +51,7 @@ export function useItens() {
     const itemsApi = await getItens()
     const item = await itemsApi.find(item => item.id === Number(id))
     const alteredItem = { ...item, checked: isChecked === false ? true : false }
-    
+
     setIsChecked(alteredItem.checked)
     await updateItens(id, alteredItem)
   }
@@ -60,7 +69,8 @@ export function useItens() {
     createId,
     addNewItem,
     changeIsChecked,
-    deleteSelectedItem
+    deleteSelectedItem,
+    message
   }
 }
 
