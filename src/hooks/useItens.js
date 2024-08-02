@@ -5,6 +5,8 @@ export function useItens() {
   const [itens, setItens] = useState([])
   const [isChecked, setIsChecked] = useState(false)
   const [message, setMessage] = useState('')
+  const [itemName, setItemName] = useState('')
+  const [quantity, setQuantity] = useState(1)
 
   const fetchItems = async () => {
     const itemsApi = await getItens()
@@ -22,24 +24,29 @@ export function useItens() {
     }
   }
 
+  const sendMessage = (message) => {
+    setMessage(message)
+    setTimeout(() => setMessage(''), 1000)
+  }
+
   const addNewItem = async (newItem) => {
     try {
       const itemsApi = await getItens()
-
       const itemAlreadyExists = itemsApi.find(item => item.itemName.trim().toLowerCase() === newItem.itemName.trim().toLowerCase())
 
       if (newItem.itemName === '' || newItem.quantity <= 0) {
-        alert('Preencha os campos corretamente!')
+        sendMessage('Preencha os campos corretamente!')
         return
 
       } else if (itemAlreadyExists) {
-        setMessage('Item ja existe!')
-        setTimeout(() => setMessage(''), 2000)
+        sendMessage('Item ja existe!')
         return
 
       } else {
         await createItens(newItem)
         setItens([...itens, newItem])
+        setItemName('')
+        setQuantity(1)
       }
 
     } catch (error) {
@@ -63,6 +70,11 @@ export function useItens() {
   return {
     itens,
     isChecked,
+    itemName,
+    quantity,
+    message,
+    setItemName,
+    setQuantity,
     setIsChecked,
     setItens,
     fetchItems,
@@ -70,7 +82,6 @@ export function useItens() {
     addNewItem,
     changeIsChecked,
     deleteSelectedItem,
-    message
   }
 }
 

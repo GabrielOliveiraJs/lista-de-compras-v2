@@ -1,5 +1,5 @@
 import { MdAddCircleOutline, MdOutlineRemoveCircleOutline, MdOutlinePlaylistAdd } from "react-icons/md"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import styled from "styled-components"
 import Input from "./Input/Index"
 import SpanButton from "../SpanButton/Index"
@@ -46,10 +46,8 @@ const StyledFormButton = styled.button`
 `
 
 const Form = () => {
-    const { addNewItem, createId, message } = useItens()
+    const { addNewItem, createId, setItemName, setQuantity, message, itemName, quantity, } = useItens()
     const { createMessage } = useMessage()
-    const [itemName, setItemName] = useState('')
-    const [quantity, setQuantity] = useState(1)
 
     useEffect(() => {
         createMessage(message, 'error')
@@ -75,8 +73,6 @@ const Form = () => {
         }
 
         await addNewItem(createdItem)
-        setItemName('')
-        setQuantity(1)
     }
 
     return (
